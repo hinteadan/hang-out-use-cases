@@ -64,7 +64,7 @@ module.exports = function (grunt) {
 		// The actual grunt server settings
 		connect: {
 			options: {
-				port: 9000,
+				port: 9099,
 				// Change this to '0.0.0.0' to access the server from outside.
 				hostname: 'localhost',
 				livereload: 35729
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
 			},
 			test: {
 				options: {
-					port: 9001,
+					port: 9098,
 					base: [
                       '.tmp',
                       'test',
@@ -90,18 +90,9 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				options: {
-					port: 9696,
+					port: 9699,
 					open: true,
 					base: '<%= yeoman.dist %>'
-				}
-			},
-			tabletennis: {
-				options: {
-					open: 'http://localhost:9000/tabletennis.html',
-					base: [
-                      '.tmp',
-                      '<%= yeoman.app %>'
-					]
 				}
 			}
 		},
@@ -262,7 +253,6 @@ module.exports = function (grunt) {
                       'scripts/{,*/}*.tmpl.html',
                       'images/{,*/}*.{webp}',
                       'fonts/{,*/}*',
-					  'languages/*.json',
 					  'web.config'
 					]
 				}, {
@@ -273,24 +263,8 @@ module.exports = function (grunt) {
 				}, {
 					expand: true,
 					dot: true,
-					cwd: '<%= yeoman.app %>/bower_components/AdminLTE/fonts',
-					dest: '<%= yeoman.dist %>/fonts',
-					src: [
-                      '{,*/}*'
-					]
-				}, {
-					expand: true,
-					dot: true,
 					cwd: '<%= yeoman.app %>/bower_components/bootstrap/fonts',
 					dest: '<%= yeoman.dist %>/fonts',
-					src: [
-                      '{,*/}*'
-					]
-				}, {
-					expand: true,
-					dot: true,
-					cwd: '<%= yeoman.app %>/bower_components/swipebox/src/img',
-					dest: '<%= yeoman.dist %>/img',
 					src: [
                       '{,*/}*'
 					]
@@ -330,20 +304,6 @@ module.exports = function (grunt) {
                         {
                             match: /["']httpStore.url["'],null/gi,
                             replacement: '"httpStore.url","http://h-httpstore.azurewebsites.net/"',
-                            expression: true
-                        }
-			        ]
-			    },
-			    files: [
-                    { expand: true, flatten: true, src: ['<%= yeoman.dist %>\\scripts\\*.js'], dest: '<%= yeoman.dist %>\\scripts\\' }
-			    ]
-			},
-			sysgenic: {
-			    options: {
-			        patterns: [
-                        {
-                            match: /["']httpStore.url["'],null/gi,
-                            replacement: '"httpStore.url","http://193.231.161.194:6969/"',
                             expression: true
                         }
 			        ]
