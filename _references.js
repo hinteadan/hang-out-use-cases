@@ -10,3 +10,4 @@
 /// <reference path="app/scripts/app.js" /
 /// <reference path="app/scripts/model.js" />
 /// <reference path="app/scripts/data-service.js" />
+/// <reference path="app/scripts/model-mapper.js" />
