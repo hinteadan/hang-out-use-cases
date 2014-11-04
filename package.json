@@ -22,6 +22,7 @@
     "grunt-svgmin": "^1.0.0",
     "grunt-usemin": "^2.4.0",
     "grunt-replace": "^0.7.9",
+    "grunt-angular-templates": "^0.5.7",
     "jshint-stylish": "~1.0.0",
     "karma": "^0.12.24",
     "karma-firefox-launcher": "^0.1.3",

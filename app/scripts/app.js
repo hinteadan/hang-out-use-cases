@@ -5,7 +5,8 @@
     .constant('storeUrl', 'http://h-httpstore.azurewebsites.net/')
     .config(['$routeProvider', function ($route) {
         $route
-            .when('/new', { templateUrl: 'scripts/new-activity.html', controller: 'new-activity' })
+            .when('/', { templateUrl: 'scripts/use-cases.tmpl.html', controller: 'use-cases' })
+            .when('/new', { templateUrl: 'scripts/new-activity.tmpl.html', controller: 'new-activity' })
             .otherwise({ redirectTo: '/' });
     }]);
 
