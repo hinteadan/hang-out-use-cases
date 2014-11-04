@@ -3,6 +3,9 @@
 
     angular.module('hang-out', ['ngRoute'])
     .constant('storeUrl', 'http://h-httpstore.azurewebsites.net/')
+    .constant('storeName', {
+        activities: 'h-hang-out-activities'
+    })
     .config(['$routeProvider', function ($route) {
         $route
             .when('/', { templateUrl: 'scripts/use-cases.tmpl.html', controller: 'use-cases' })
