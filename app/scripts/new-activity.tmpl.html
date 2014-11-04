@@ -6,9 +6,80 @@
         </li>
     </ul>
 
-    <fieldset>
-        <legend>Activity Data</legend>
-    </fieldset>
+    <form role="form">
+        <fieldset ng-init="isInitiatorSimpleView = true">
+            <legend>
+                Initiator
+                <span class="small">
+                    <a class="clickable" ng-click="isInitiatorSimpleView = false" ng-show="isInitiatorSimpleView">Advanced</a>
+                    <a class="clickable" ng-click="isInitiatorSimpleView = true" ng-hide="isInitiatorSimpleView">Simple</a>
+                </span>
+            </legend>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="activity.initiator.email" placeholder="Email address" />
+            </div>
+            <div class="form-group" ng-hide="isInitiatorSimpleView">
+                <input type="text" class="form-control" ng-model="activity.initiator.name" placeholder="Full name" />
+            </div>
+            <div class="form-group" ng-hide="isInitiatorSimpleView">
+                <input type="text" class="form-control" ng-model="activity.initiator.profileUrl" placeholder="Public Profile URL (Facebook, Google+, etc.)" />
+            </div>
+        </fieldset>
+        <fieldset ng-init="isActivitySimpleView = true">
+            <legend>
+                Activity
+                <span class="small">
+                    <a class="clickable" ng-click="isActivitySimpleView = false" ng-show="isActivitySimpleView">Advanced</a>
+                    <a class="clickable" ng-click="isActivitySimpleView = true" ng-hide="isActivitySimpleView">Simple</a>
+                </span>
+            </legend>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="activity.title" placeholder="Title" />
+            </div>
+            <div class="form-group" ng-hide="isActivitySimpleView">
+                <input type="text" class="form-control" ng-model="activity.description" placeholder="Description" />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="activity.startsOn" placeholder="When?" />
+            </div>
+            <div class="form-group" ng-hide="isActivitySimpleView">
+                <input type="text" class="form-control" ng-model="activity.endsOn" placeholder="Until?" />
+            </div>
+        </fieldset>
+        <fieldset ng-hide="isActivitySimpleView">
+            <legend>Place</legend>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="activity.place.name" placeholder="Name" />
+            </div>
+            <div class="form-group">
+                <textarea class="form-control vertical-resize" ng-model="activity.place.address" placeholder="Address"></textarea>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control vertical-resize" ng-model="activity.place.details" placeholder="Some additional details"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="activity.place.websiteUrl" placeholder="Website URL (Facebook, Google+)" />
+            </div>
+        </fieldset>
+        <fieldset ng-hide="isActivitySimpleView" class="form-inline">
+            <legend>Place Location</legend>
+            <div class="form-group">
+                <label>
+                    Lat:
+                    <input type="text" class="form-control" ng-model="activity.place.location.lat" placeholder="Lat" />
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    Long:
+                    <input type="text" class="form-control" ng-model="activity.place.location.lng" placeholder="Long" />
+                </label>
+            </div>
+        </fieldset>
+    </form>
 
+    <hr />
+
+    <h5>JSON Payload:</h5>
     <pre>{{activity|json}}</pre>
 </div>

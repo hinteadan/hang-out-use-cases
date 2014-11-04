@@ -20,6 +20,7 @@
         this.websiteUrl = websiteUrl || null;
         this.location = location || GpsLocation.unknown;
     }
+    Place.unknown = new Place();
 
     function Activity(initiator, title, startsOn, endsOn, place, description) {
         this.initiator = initiator;
@@ -27,7 +28,7 @@
         this.description = description || null;
         this.startsOn = startsOn;
         this.endsOn = endsOn;
-        this.place = place;
+        this.place = place || Place.unknown;
     }
 
     angular.module('hang-out').value('model', {
