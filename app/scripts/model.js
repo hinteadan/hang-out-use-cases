@@ -26,9 +26,21 @@
         this.initiator = initiator;
         this.title = title || null;
         this.description = description || null;
-        this.startsOn = startsOn;
+        this.startsOn = startsOn || new Date();
         this.endsOn = endsOn;
         this.place = place || Place.unknown;
+        this.meta = function () {
+            return {
+                initiator: this.initiator.email,
+                title: this.title,
+                startsOn: this.startsOn,
+                endsOn: this.endsOn,
+                placeName: this.place.name,
+                placeAddress: this.place.address,
+                placeLocationLat: this.place.location.lat,
+                placeLocationLng: this.place.location.lng
+            };
+        };
     }
 
     angular.module('hang-out').value('model', {
