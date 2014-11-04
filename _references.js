@@ -8,3 +8,4 @@
 /// <reference path="app/bower_components/jsSHA/src/sha.js" />
 /// <reference path="app/bower_components/moment/moment.js" />
 /// <reference path="app/scripts/app.js" /
+/// <reference path="app/scripts/model.js" />
