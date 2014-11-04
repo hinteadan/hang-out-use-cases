@@ -26,15 +26,15 @@
         this.initiator = initiator;
         this.title = title || null;
         this.description = description || null;
-        this.startsOn = startsOn || new Date();
+        this.startsOn = startsOn || new Date().getTime();
         this.endsOn = endsOn;
         this.place = place || Place.unknown;
         this.meta = function () {
             return {
                 initiator: this.initiator.email,
                 title: this.title,
-                startsOn: this.startsOn,
-                endsOn: this.endsOn,
+                startsOn: this.startsOn ? this.startsOn.getTime() : null,
+                endsOn: this.endsOn ? this.endsOn.getTime() : null,
                 placeName: this.place.name,
                 placeAddress: this.place.address,
                 placeLocationLat: this.place.location.lat,
