@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('hang-out', ['ngRoute'])
-    .constant('storeUrl', 'http://h-httpstore.azurewebsites.net/')
+    .constant('storeUrl', 'http://localhost/HttpDataStore/')
     .constant('storeName', {
         activities: 'h-hang-out-activities'
     })
