@@ -38,7 +38,7 @@
                     location: new ConstructorInfo(m.GpsLocation)
                 })
             }));
-        }
+        };
 
     }]);
 
