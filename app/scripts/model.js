@@ -55,6 +55,7 @@
         this.meta = function () {
             return {
                 initiator: this.initiator.email,
+                participants: _.pluck(this.pendingMembers, 'email').join(','),
                 title: this.title,
                 startsOn: this.startsOn,
                 endsOn: this.endsOn,

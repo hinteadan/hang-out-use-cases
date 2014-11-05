@@ -1,3 +1,34 @@
 ﻿<div>
-    Status view
+    <h3 class="text-center">Status Views</h3>
+    <ul class="list-unstyled text-center">
+        <li>
+            <a href="#/">CANCEL</a>
+        </li>
+    </ul>
+
+    <form role="form" ng-submit="statusForMe()" ng-init="isMeSimpleView = true">
+        <fieldset>
+            <legend>
+                I am
+                <span class="small">
+                    <a class="clickable" ng-click="isMeSimpleView = false" ng-show="isMeSimpleView">Advanced</a>
+                    <a class="clickable" ng-click="isMeSimpleView = true" ng-hide="isMeSimpleView">Simple</a>
+                </span>
+            </legend>
+        </fieldset>
+        <div class="form-group">
+            <input type="email" class="form-control" ng-model="me.email" placeholder="Email address" />
+        </div>
+        <div class="form-group" ng-hide="isMeSimpleView">
+            <input type="text" class="form-control" ng-model="me.name" placeholder="Full name" />
+        </div>
+        <div class="form-group" ng-hide="isMeSimpleView">
+            <input type="text" class="form-control" ng-model="me.profileUrl" placeholder="Public Profile URL (Facebook, Google+, etc.)" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="!me.email">
+                View status for me
+            </button>
+        </div>
+    </form>
 </div>

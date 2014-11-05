@@ -77,9 +77,47 @@
 
         }
 
+        function fetchActivitiesFor(dude, then) {
+            var query = new ds.queryWithAnd().where('initiator')(ds.is.EqualTo)(dude.email);
+            activityStore.Query(query, function (result) {
+                ///<param name="result" type="ds.OperationResult" />
+                if (angular.isFunction(then)) {
+                    var activities = !result.isSuccess ? [] : _.map(result.data, function (entity) {
+                        ///<param name="entity" type="ds.Entity" />
+                        return {
+                            id: entity.Id,
+                            token: entity.CheckTag,
+                            activity: map.activity(entity.Data)
+                        };
+                    });
+                    then.call(result, activities, result.isSuccess, result.reason);
+                }
+            });
+        }
+
+        function fetchActivitiesForParticipant(dude, then) {
+            var query = new ds.queryWithAnd().where('participants')(ds.is.Containing)(dude.email);
+            activityStore.Query(query, function (result) {
+                ///<param name="result" type="ds.OperationResult" />
+                if (angular.isFunction(then)) {
+                    var activities = !result.isSuccess ? [] : _.map(result.data, function (entity) {
+                        ///<param name="entity" type="ds.Entity" />
+                        return {
+                            id: entity.Id,
+                            token: entity.CheckTag,
+                            activity: map.activity(entity.Data)
+                        };
+                    });
+                    then.call(result, activities, result.isSuccess, result.reason);
+                }
+            });
+        }
+
         this.publishNewActivity = as$q(storeActivity);
         this.activitiesToJoin = as$q(fetchJoinableActivities);
         this.joinActivity = as$q(joinActivity);
+        this.activitiesFor = as$q(fetchActivitiesFor);
+        this.activitiesAppliedToFor = as$q(fetchActivitiesForParticipant);
 
     }]);
 
