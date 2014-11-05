@@ -1,5 +1,15 @@
-﻿(function (angular) {
+﻿(function (angular, moment) {
     'use strict';
+
+    var defaultDateFormat = 'D MMM YYYY, HH:mm';
+
+    function parseToMoment(input) {
+        var mDate = moment(input);
+        if (!mDate.isValid()) {
+            mDate = moment(input, moment.ISO_8601);
+        }
+        return mDate;
+    }
 
     function Individual(name, email, profileUrl) {
         this.name = name || null;
@@ -27,7 +37,13 @@
         this.title = title || null;
         this.description = description || null;
         this.startsOn = startsOn || new Date().getTime();
+        this.startsOnFormatted = function () {
+            return !this.startsOn ? '' : parseToMoment(this.startsOn).format(defaultDateFormat);
+        };
         this.endsOn = endsOn;
+        this.endsOnFormatted = function () {
+            return !this.endsOn ? '' : parseToMoment(this.endsOn).format(defaultDateFormat);
+        };
         this.place = place || Place.unknown;
         this.meta = function () {
             return {
@@ -50,4 +66,4 @@
         Activity: Activity
     });
 
-}).call(this, this.angular);
+}).call(this, this.angular, this.moment);

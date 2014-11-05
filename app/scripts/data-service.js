@@ -36,7 +36,7 @@
         }
 
         function fetchJoinableActivities(then) {
-            var query = new ds.queryWithAnd().where('startsOn')(ds.is.LowerThan)(new Date().getTime());
+            var query = new ds.queryWithAnd().where('startsOn')(ds.is.HigherThan)(new Date().getTime());
             activityStore.Query(query, function (result) {
                 ///<param name="result" type="ds.OperationResult" />
                 log(result);
