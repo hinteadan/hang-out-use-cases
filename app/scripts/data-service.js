@@ -1,8 +1,6 @@
 ﻿(function (angular, ds, _) {
     'use strict';
 
-    var log = this.console.log;
-
     angular.module('hang-out')
     .service('dataStore', ['$q', 'storeUrl', 'storeName', 'model-mapper', function ($q, storeUrl, storeName, map) {
 
@@ -47,7 +45,6 @@
                             activity: map.activity(entity.Data)
                         };
                     });
-                    log(activities);
                     then.call(result, activities, result.isSuccess, result.reason);
                 }
             });
@@ -74,7 +71,6 @@
                     activity.pendingMembers.pop();
                 }
                 if (angular.isFunction(then)) {
-                    log(result);
                     then.call(result, result.data, result.isSuccess, result.reason);
                 }
             });
