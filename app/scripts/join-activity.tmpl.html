@@ -17,15 +17,49 @@
                 <th>By</th>
                 <th>When?</th>
                 <th>Where?</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entry in activities | orderBy:entry.activity.startsOn">
+            <tr ng-repeat="entry in activities | orderBy:entry.activity.startsOn" ng-init="isJoining = false">
                 <td>{{$index + 1}}</td>
                 <td>{{entry.activity.title}}</td>
-                <td>{{entry.activity.initiator.name}}</td>
+                <td>{{entry.activity.initiator.name || 'Anonymous'}}</td>
                 <td>{{entry.activity.startsOnFormatted()}}</td>
                 <td>{{entry.activity.place.name || 'Not specified'}}</td>
+                <td>
+                    <a class="clickable" ng-click="isJoining = true" ng-hide="isJoining">Join</a>
+                    <div ng-show="isJoining">
+                        <form role="form" ng-submit="join(entry)">
+                            <fieldset ng-init="isIndividualSimpleView = true">
+                                <legend class="small">
+                                    About me
+                                    <span class="small">
+                                        <a class="clickable" ng-click="isIndividualSimpleView = false" ng-show="isIndividualSimpleView">more</a>
+                                        <a class="clickable" ng-click="isIndividualSimpleView = true" ng-hide="isIndividualSimpleView">less</a>
+                                    </span>
+                                </legend>
+                                <div class="form-group form-group-sm">
+                                    <input type="email" class="form-control input-sm" ng-model="me.email" placeholder="Email address" />
+                                </div>
+                                <div class="form-group" ng-hide="isIndividualSimpleView">
+                                    <input type="text" class="form-control input-sm" ng-model="me.name" placeholder="Full name" />
+                                </div>
+                                <div class="form-group" ng-hide="isIndividualSimpleView">
+                                    <input type="text" class="form-control input-sm" ng-model="me.profileUrl" placeholder="Public Profile URL (Facebook, Google+, etc.)" />
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right" ng-disabled="!me.email">
+                                        Join
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-link btn-warning pull-right" ng-click="isJoining = false">
+                                        Cancel, never mind
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
