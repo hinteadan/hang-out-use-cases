@@ -40,10 +40,30 @@
                 <input type="text" class="form-control" ng-model="activity.description" placeholder="Description" />
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" ng-model="activity.startsOn" placeholder="When?" />
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dropdownStartsOn" role="button" data-toggle="dropdown" data-target="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="activity.startsOn" placeholder="When?" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker ng-model="activity.startsOn" data-datetimepicker-config="{ dropdownSelector: '#dropdownStartsOn' }"></datetimepicker>
+                    </ul>
+                </div>
             </div>
             <div class="form-group" ng-hide="isActivitySimpleView">
-                <input type="text" class="form-control" ng-model="activity.endsOn" placeholder="Until?" />
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dropdownEndsOn" role="button" data-toggle="dropdown" data-target="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="activity.endsOn" placeholder="Until?" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker ng-model="activity.endsOn" data-datetimepicker-config="{ dropdownSelector: '#dropdownEndsOn' }"></datetimepicker>
+                    </ul>
+                </div>
             </div>
         </fieldset>
         <fieldset ng-hide="isActivitySimpleView">
