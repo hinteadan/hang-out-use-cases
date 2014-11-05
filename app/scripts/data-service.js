@@ -4,9 +4,25 @@
     var log = this.console.log;
 
     angular.module('hang-out')
-    .service('dataStore', ['storeUrl', 'storeName', 'model-mapper', function (storeUrl, storeName, map) {
+    .service('dataStore', ['$q', 'storeUrl', 'storeName', 'model-mapper', function ($q, storeUrl, storeName, map) {
 
         var activityStore = new ds.Store(storeName.activities, storeUrl);
+
+        function as$q(fn) {
+            ///<param name="fn" type="Function" />
+            return function () {
+                var deff = $q.defer();
+                fn.apply(null, _.union(arguments, [function (payload) {
+                    if (this.isSuccess) {
+                        deff.resolve(payload);
+                    }
+                    else {
+                        deff.reject(this.reason);
+                    }
+                }]));
+                return deff.promise;
+            }
+        }
 
         function storeActivity(activity, then) {
             var entity = new ds.Entity(activity, activity.meta());
@@ -38,8 +54,8 @@
             });
         }
 
-        this.publishNewActivity = storeActivity;
-        this.activitiesToJoin = fetchJoinableActivities;
+        this.publishNewActivity = as$q(storeActivity);
+        this.activitiesToJoin = as$q(fetchJoinableActivities);
 
     }]);
 

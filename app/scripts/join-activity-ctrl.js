@@ -4,9 +4,7 @@
     angular.module('hang-out')
     .controller('join-activity', ['dataStore', function (store) {
 
-        store.activitiesToJoin(function (activities) {
-
-        });
+        store.activitiesToJoin();
 
     }]);
 
