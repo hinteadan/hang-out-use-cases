@@ -44,9 +44,10 @@ Flow Hang-Out Mobile App
 1. As an "Activity Initiator" I must be able to check/act **_for each_** of my initiated activities:
  1. The list of pending participants;
  2. Accept/Reject any pending participant;
- 3. Close the activity because:
+ 3. Wrap the activity because:
       1. It's **_going to happen_**, everything's cool;
       2. Is **_canceled_**, specifying a reason for being so;
 2. As a person I must be able to check/act **_for each_** of my activities on which I'm queued:
  1. Current status (still going to happen, or is cancelled)
  2. Bail out, specifying a reason for doing so;
+ 3. If a dude bails out of a wrapped activity, the activity is automatically un-wrapped, forcing the initiator to take action in order to wrap it back;
