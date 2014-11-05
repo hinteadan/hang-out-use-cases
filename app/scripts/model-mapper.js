@@ -19,7 +19,7 @@
         function constructFromDto(dto, constructorInfo) {
             /// <param name="constructorInfo" type="ConstructorInfo" />
             var model = constructorInfo.build(dto);
-            for (var property in model) {
+            for (var property in dto) {
                 if (constructorInfo.hasChild(property)) {
                     model[property] = constructFromDto(dto[property], constructorInfo.children[property]);
                     continue;
