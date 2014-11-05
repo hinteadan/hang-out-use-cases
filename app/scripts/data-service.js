@@ -28,7 +28,6 @@
             var entity = new ds.Entity(activity, activity.meta());
             activityStore.Save(entity, function (result) {
                 ///<param name="result" type="ds.OperationResult" />
-                log(result);
                 if (angular.isFunction(then)) {
                     then.call(result, result.data, result.isSuccess, result.reason);
                 }
@@ -39,7 +38,6 @@
             var query = new ds.queryWithAnd().where('startsOn')(ds.is.HigherThan)(new Date().getTime());
             activityStore.Query(query, function (result) {
                 ///<param name="result" type="ds.OperationResult" />
-                log(result);
                 if (angular.isFunction(then)) {
                     var activities = !result.isSuccess ? [] : _.map(result.data, function (entity) {
                         ///<param name="entity" type="ds.Entity" />
@@ -75,8 +73,8 @@
                 if (!result.isSuccess) {
                     activity.pendingMembers.pop();
                 }
-                log(result);
                 if (angular.isFunction(then)) {
+                    log(result);
                     then.call(result, result.data, result.isSuccess, result.reason);
                 }
             });

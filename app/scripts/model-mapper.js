@@ -1,4 +1,4 @@
-﻿(function (angular) {
+﻿(function (angular, _) {
     'use strict';
 
     function ConstructorInfo(constructor, children, isFactory) {
@@ -19,7 +19,7 @@
         function constructFromDto(dto, constructorInfo) {
             /// <param name="constructorInfo" type="ConstructorInfo" />
             var model = constructorInfo.build(dto);
-            for (var property in dto) {
+            for (var property in model) {
                 if (constructorInfo.hasChild(property)) {
                     model[property] = constructFromDto(dto[property], constructorInfo.children[property]);
                     continue;
@@ -32,6 +32,11 @@
         this.activity = function (dto) {
             return constructFromDto(dto, new ConstructorInfo(m.Activity, {
                 initiator: new ConstructorInfo(m.Individual),
+                pendingMembers: new ConstructorInfo(function (dto) {
+                    return _.map(dto, function (dude, index) {
+                        dto[index] = constructFromDto(dude, new ConstructorInfo(m.Individual));
+                    });
+                }, null, true),
                 startsOn: new ConstructorInfo(function (dto) { return new Date(dto).getTime(); }, null, true),
                 endsOn: new ConstructorInfo(function (dto) { return dto ? new Date(dto).getTime() : null; }, null, true),
                 place: new ConstructorInfo(m.Place, {
