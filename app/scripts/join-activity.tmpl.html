@@ -17,6 +17,7 @@
                 <th>By</th>
                 <th>When?</th>
                 <th>Where?</th>
+                <th>With?</th>
                 <th></th>
             </tr>
         </thead>
@@ -27,6 +28,16 @@
                 <td>{{entry.activity.initiator.name || entry.activity.initiator.email}}</td>
                 <td>{{entry.activity.startsOnFormatted()}}</td>
                 <td>{{entry.activity.place.name || 'Not specified'}}</td>
+                <td ng-init="isParticipantsDetailed = false">
+                    <a class="clickable" ng-click="isParticipantsDetailed = !isParticipantsDetailed">
+                        {{entry.activity.allParticipants().length + ' willing to go'}}
+                    </a>
+                    <ul class="list-unstyled" ng-show="isParticipantsDetailed">
+                        <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:[dude.name,dude.email]">
+                            {{dude.name || dude.email}}
+                        </li>
+                    </ul>
+                </td>
                 <td>
                     <a class="clickable" ng-click="isJoining = true" ng-hide="isJoining">Join</a>
                     <div ng-show="isJoining">
