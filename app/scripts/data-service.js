@@ -45,6 +45,7 @@
                         ///<param name="entity" type="ds.Entity" />
                         return {
                             id: entity.Id,
+                            token: entity.CheckTag,
                             activity: map.activity(entity.Data)
                         };
                     });
@@ -54,8 +55,37 @@
             });
         }
 
+        function joinActivity(id, token, activity, individual, then) {
+            if (activity.hasParticipant(individual)) {
+                if (angular.isFunction(then)) {
+                    then.call(new ds.OperationResult(false, 'This member is already part of the activity'));
+                }
+                return;
+            }
+
+            activity.pendingMembers = activity.pendingMembers || [];
+            activity.pendingMembers.push(individual);
+
+            var entity = new ds.Entity(activity, activity.meta());
+            entity.Id = id;
+            entity.CheckTag = token;
+
+            activityStore.Save(entity, function (result) {
+                ///<param name="result" type="ds.OperationResult" />
+                if (!result.isSuccess) {
+                    activity.pendingMembers.pop();
+                }
+                log(result);
+                if (angular.isFunction(then)) {
+                    then.call(result, result.data, result.isSuccess, result.reason);
+                }
+            });
+
+        }
+
         this.publishNewActivity = as$q(storeActivity);
         this.activitiesToJoin = as$q(fetchJoinableActivities);
+        this.joinActivity = as$q(joinActivity);
 
     }]);
 

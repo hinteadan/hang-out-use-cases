@@ -32,8 +32,8 @@
         this.activity = function (dto) {
             return constructFromDto(dto, new ConstructorInfo(m.Activity, {
                 initiator: new ConstructorInfo(m.Individual),
-                startsOn: new ConstructorInfo(function (dto) { return new Date(dto); }, null, true),
-                endsOn: new ConstructorInfo(function (dto) { return dto ? new Date(dto) : null; }, null, true),
+                startsOn: new ConstructorInfo(function (dto) { return new Date(dto).getTime(); }, null, true),
+                endsOn: new ConstructorInfo(function (dto) { return dto ? new Date(dto).getTime() : null; }, null, true),
                 place: new ConstructorInfo(m.Place, {
                     location: new ConstructorInfo(m.GpsLocation)
                 })

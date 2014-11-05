@@ -1,4 +1,4 @@
-﻿(function (angular, moment) {
+﻿(function (angular, moment, _) {
     'use strict';
 
     var defaultDateFormat = 'D MMM YYYY, HH:mm';
@@ -34,6 +34,7 @@
 
     function Activity(initiator, title, startsOn, endsOn, place, description) {
         this.initiator = initiator;
+        this.pendingMembers = [];
         this.title = title || null;
         this.description = description || null;
         this.startsOn = startsOn || new Date().getTime();
@@ -45,12 +46,18 @@
             return !this.endsOn ? '' : parseToMoment(this.endsOn).format(defaultDateFormat);
         };
         this.place = place || Place.unknown;
+        this.allParticipants = function () {
+            return _.union([this.initiator], this.pendingMembers);
+        };
+        this.hasParticipant = function (individual) {
+            return _.any(this.allParticipants(), function (p) { return p.email === individual.email; });
+        };
         this.meta = function () {
             return {
                 initiator: this.initiator.email,
                 title: this.title,
-                startsOn: this.startsOn ? this.startsOn.getTime() : null,
-                endsOn: this.endsOn ? this.endsOn.getTime() : null,
+                startsOn: this.startsOn,
+                endsOn: this.endsOn,
                 placeName: this.place.name,
                 placeAddress: this.place.address,
                 placeLocationLat: this.place.location.lat,
@@ -66,4 +73,4 @@
         Activity: Activity
     });
 
-}).call(this, this.angular, this.moment);
+}).call(this, this.angular, this.moment, this._);
