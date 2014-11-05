@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entry in activities | orderBy:entry.activity.startsOn" ng-init="isJoining = false">
+            <tr ng-repeat="entry in activities | orderBy:'startsOn'" ng-init="isJoining = false">
                 <td>{{$index + 1}}</td>
                 <td>{{entry.activity.title}}</td>
                 <td>{{entry.activity.initiator.name || entry.activity.initiator.email}}</td>
@@ -33,7 +33,7 @@
                         {{entry.activity.allParticipants().length + ' willing to go'}}
                     </a>
                     <ul class="list-unstyled" ng-show="isParticipantsDetailed">
-                        <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:[dude.name,dude.email] track by dude.email">
+                        <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:['name','email'] track by dude.email">
                             {{dude.name || dude.email}}
                             <em class="small" ng-show="dude == entry.activity.initiator"><strong>Initiator</strong></em>
                         </li>

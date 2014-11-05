@@ -42,7 +42,8 @@
                         return {
                             id: entity.Id,
                             token: entity.CheckTag,
-                            activity: map.activity(entity.Data)
+                            activity: map.activity(entity.Data),
+                            startsOn: entity.Data.startsOn
                         };
                     });
                     then.call(result, activities, result.isSuccess, result.reason);
@@ -87,7 +88,8 @@
                         return {
                             id: entity.Id,
                             token: entity.CheckTag,
-                            activity: map.activity(entity.Data)
+                            activity: map.activity(entity.Data),
+                            startsOn: entity.Data.startsOn
                         };
                     });
                     then.call(result, activities, result.isSuccess, result.reason);
@@ -105,7 +107,8 @@
                         return {
                             id: entity.Id,
                             token: entity.CheckTag,
-                            activity: map.activity(entity.Data)
+                            activity: map.activity(entity.Data),
+                            startsOn: entity.Data.startsOn
                         };
                     });
                     then.call(result, activities, result.isSuccess, result.reason);
