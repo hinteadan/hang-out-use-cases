@@ -21,7 +21,7 @@
                     }
                 }]));
                 return deff.promise;
-            }
+            };
         }
 
         function storeActivity(activity, then) {
