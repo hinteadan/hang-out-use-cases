@@ -33,7 +33,7 @@
                         {{entry.activity.allParticipants().length + ' willing to go'}}
                     </a>
                     <ul class="list-unstyled" ng-show="isParticipantsDetailed">
-                        <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:[dude.name,dude.email]">
+                        <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:[dude.name,dude.email] track by dude.email">
                             {{dude.name || dude.email}}
                         </li>
                     </ul>
