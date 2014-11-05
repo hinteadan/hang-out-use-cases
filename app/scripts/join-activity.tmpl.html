@@ -35,6 +35,7 @@
                     <ul class="list-unstyled" ng-show="isParticipantsDetailed">
                         <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:[dude.name,dude.email] track by dude.email">
                             {{dude.name || dude.email}}
+                            <em class="small" ng-show="dude == entry.activity.initiator"><strong>Initiator</strong></em>
                         </li>
                     </ul>
                 </td>
