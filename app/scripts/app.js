@@ -12,6 +12,7 @@
             .when('/', { templateUrl: 'scripts/use-cases.tmpl.html', controller: 'use-cases' })
             .when('/new', { templateUrl: 'scripts/new-activity.tmpl.html', controller: 'new-activity' })
             .when('/join', { templateUrl: 'scripts/join-activity.tmpl.html', controller: 'join-activity' })
+            .when('/status', { templateUrl: 'scripts/status.tmpl.html', controller: 'status' })
             .otherwise({ redirectTo: '/' });
     }]);
 
