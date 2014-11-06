@@ -32,8 +32,10 @@
         </div>
     </form>
 
+    <div class="text-center" ng-show="flag.isLoadingMyActivities">Loading activities initiated by me, please wait...</div>
+    <div class="text-center" ng-show="flag.isLoadingMyAppliedForActivities">Loading activities to which I applied, please wait...</div>
+
     <div ng-show="flag.hasQueried">
-        <div class="text-center" ng-show="flag.isLoadingMyActivities">Loading activities initiated by me, please wait...</div>
         <div class="text-center" ng-show="!flag.isLoadingMyActivities && !myActivities.length">I haven't initiated any activities. Perhaps <a href="#/new">create one</a> ?</div>
         <table class="table table-striped" ng-hide="flag.isLoadingMyActivities || !myActivities.length">
             <caption><h4><strong>Activities initiated by me</strong></h4></caption>
@@ -54,13 +56,15 @@
                     <td>{{entry.activity.startsOnFormatted()}}</td>
                     <td>{{entry.activity.place.name || 'Not specified'}}</td>
                     <td ng-init="isParticipantsDetailed = false">
-                        <a class="clickable" ng-click="isParticipantsDetailed = !isParticipantsDetailed">
-                            {{entry.activity.allParticipants().length + ' willing to go'}}
+                        <em ng-hide="entry.activity.pendingMembers.length">Nobody joined so far</em>
+                        <a class="clickable" ng-show="entry.activity.pendingMembers.length" ng-click="isParticipantsDetailed = !isParticipantsDetailed">
+                            {{entry.activity.pendingMembers.length + ' willing to join me'}}
                         </a>
                         <ul class="list-unstyled" ng-show="isParticipantsDetailed">
-                            <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:['name','email'] track by dude.email">
+                            <li ng-repeat="dude in entry.activity.pendingMembers | orderBy:['name','email'] track by dude.email">
                                 {{dude.name || dude.email}}
-                                <em class="small" ng-show="dude == entry.activity.initiator"><strong>Initiator</strong></em>
+                                &nbsp;|&nbsp;
+                                <a class="clickable"><small>Accept</small></a>
                             </li>
                         </ul>
                     </td>
@@ -72,8 +76,6 @@
         </table>
 
 
-
-        <div class="text-center" ng-show="flag.isLoadingMyAppliedForActivities">Loading activities to which I applied, please wait...</div>
         <div class="text-center" ng-show="!flag.isLoadingMyAppliedForActivities && !myAppliedActivities.length">I haven't applied for any activity. Perhaps <a href="#/join">join one now</a> ?</div>
         <table class="table table-striped" ng-hide="flag.isLoadingMyAppliedForActivities || !myAppliedActivities.length">
             <caption><h4><strong>Activities to which I applied</strong></h4></caption>
@@ -81,6 +83,7 @@
                 <tr>
                     <th>#</th>
                     <th>Activity</th>
+                    <th>By</th>
                     <th>When?</th>
                     <th>Where?</th>
                     <th>With?</th>
@@ -91,6 +94,7 @@
                 <tr ng-repeat="entry in myAppliedActivities | orderBy:'startsOn'">
                     <td>{{$index + 1}}</td>
                     <td>{{entry.activity.title}}</td>
+                    <td>{{entry.activity.initiator.name || entry.activity.initiator.email}}</td>
                     <td>{{entry.activity.startsOnFormatted()}}</td>
                     <td>{{entry.activity.place.name || 'Not specified'}}</td>
                     <td ng-init="isParticipantsDetailed = false">

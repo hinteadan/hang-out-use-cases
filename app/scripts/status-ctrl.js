@@ -17,6 +17,8 @@
         $s.myAppliedActivities = [];
 
         $s.statusForMe = function () {
+            $s.flag.isLoadingMyActivities = true;
+            $s.flag.isLoadingMyAppliedForActivities = true;
             $q.all([store.activitiesFor(me), store.activitiesAppliedToFor(me)])
             .then(function(activitiesPool){
                 $s.myActivities = activitiesPool[0];
