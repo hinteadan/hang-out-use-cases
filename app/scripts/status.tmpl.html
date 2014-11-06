@@ -70,7 +70,7 @@
                         </ul>
                     </td>
                     <td>
-                        <em ng-show="entry.activity.isCancelled"><strong>Canceled</strong> because: <small>{{entry.activity.cancellationReason}}</small></em>
+                        <em ng-show="entry.activity.isCancelled"><strong>Canceled</strong>, saying: <small>"{{entry.activity.cancellationReason || 'Nothing'}}"</small></em>
                         <div ng-hide="entry.activity.isCancelled || isCancelling" ng-init="isCancelling = false">
                             <div ng-show="entry.activity.isWrapped">
                                 <em><strong>It's a Wrap !</strong></em>

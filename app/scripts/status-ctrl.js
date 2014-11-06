@@ -1,8 +1,7 @@
 ﻿(function (angular) {
     'use strict';
 
-    var notify = this.alert,
-        confirm = this.confirm;
+    var notify = this.alert;
 
     angular.module('hang-out')
     .controller('status', ['$scope', '$q', 'model', 'dataStore', function ($s, $q, m, store) {
