@@ -4,7 +4,7 @@
     angular.module('hang-out')
     .controller('status', ['$scope', '$q', 'model', 'dataStore', function ($s, $q, m, store) {
 
-        var me = new m.Individual();
+        var me = new m.Individual(null, 'hintea_dan@yahoo.co.uk');
 
         $s.flag = {
             hasQueried: false,
