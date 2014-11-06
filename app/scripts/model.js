@@ -52,6 +52,11 @@
             return !this.endsOn ? '' : parseToMoment(this.endsOn).format(defaultDateFormat);
         };
         this.place = place || Place.unknown;
+        this.friendlyStatus = function () {
+            if (this.isCancelled) { return 'Cancelled, quoting: "' + this.cancellationReason + '"'; }
+            if (this.isWrapped) { return 'Confirmed'; }
+            return 'Still pending';
+        };
         this.allParticipants = function () {
             return _.union([this.initiator], this.pendingMembers);
         };

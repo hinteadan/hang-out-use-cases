@@ -115,6 +115,7 @@
                     <th>When?</th>
                     <th>Where?</th>
                     <th>With?</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
             </thead>
@@ -137,6 +138,7 @@
                             </li>
                         </ul>
                     </td>
+                    <td>{{entry.activity.friendlyStatus()}}</td>
                     <td>
                         <a class="clickable" ng-hide="isBailingOut" ng-init="isBailingOut = false" ng-click="isBailingOut = true">Bail out!</a>
                         <div ng-show="isBailingOut" ng-init="reason = null">
