@@ -70,7 +70,16 @@
                         </ul>
                     </td>
                     <td>
-                        Actions go here
+                        <div ng-show="entry.activity.isWrapped">
+                            <em><strong>It's a Wrap !</strong></em>
+                            &nbsp;|&nbsp;
+                            <a class="clickable">Cancel</a>
+                        </div>
+                        <div ng-hide="entry.activity.isWrapped">
+                            <a class="clickable" ng-click="wrapIt(entry)">Wrap it!</a>
+                            &nbsp;|&nbsp;
+                            <a class="clickable">Cancel</a>
+                        </div>
                     </td>
                 </tr>
             </tbody>

@@ -22,6 +22,19 @@
             };
         }
 
+        function persistUpdatedActivity(id, token, activity, then) {
+            var entity = new ds.Entity(activity, activity.meta());
+            entity.Id = id;
+            entity.CheckTag = token;
+
+            activityStore.Save(entity, function (result) {
+                ///<param name="result" type="ds.OperationResult" />
+                if (angular.isFunction(then)) {
+                    then.call(result, result.data, result.isSuccess, result.reason);
+                }
+            });
+        }
+
         function storeActivity(activity, then) {
             var entity = new ds.Entity(activity, activity.meta());
             activityStore.Save(entity, function (result) {
@@ -61,16 +74,7 @@
 
             activity.joinMember(individual);
 
-            var entity = new ds.Entity(activity, activity.meta());
-            entity.Id = id;
-            entity.CheckTag = token;
-
-            activityStore.Save(entity, function (result) {
-                ///<param name="result" type="ds.OperationResult" />
-                if (angular.isFunction(then)) {
-                    then.call(result, result.data, result.isSuccess, result.reason);
-                }
-            });
+            persistUpdatedActivity(id, token, activity, then);
 
         }
 
@@ -123,16 +127,20 @@
 
             activity.confirmMember(participant);
 
-            var entity = new ds.Entity(activity, activity.meta());
-            entity.Id = id;
-            entity.CheckTag = token;
+            persistUpdatedActivity(id, token, activity, then);
+        }
+        function wrapActivity(id, token, activity, then) {
 
-            activityStore.Save(entity, function (result) {
-                ///<param name="result" type="ds.OperationResult" />
+            if (activity.isWrapped) {
                 if (angular.isFunction(then)) {
-                    then.call(result, result.data, result.isSuccess, result.reason);
+                    then.call(new ds.OperationResult(false, 'This activity is already wrapped'));
                 }
-            });
+                return;
+            }
+
+            activity.wrap();
+
+            persistUpdatedActivity(id, token, activity, then);
         }
 
         this.publishNewActivity = as$q(storeActivity);
@@ -141,6 +149,7 @@
         this.activitiesFor = as$q(fetchActivitiesFor);
         this.activitiesAppliedToFor = as$q(fetchActivitiesForParticipant);
         this.confirmParticipant = as$q(confirmParticipantForActivity);
+        this.wrapActivity = as$q(wrapActivity);
 
     }]);
 

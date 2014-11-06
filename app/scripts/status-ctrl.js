@@ -39,6 +39,14 @@
             });
         };
 
+        $s.wrapIt = function (activityEntry) {
+            store
+            .wrapActivity(activityEntry.id, activityEntry.token, activityEntry.activity)
+            .then(null, function (reason) {
+                notify('Cannot wrap activity because: ' + reason);
+            });
+        };
+
     }]);
 
 }).call(this, this.angular);

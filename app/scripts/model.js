@@ -43,6 +43,7 @@
             return !this.startsOn ? '' : parseToMoment(this.startsOn).format(defaultDateFormat);
         };
         this.endsOn = endsOn;
+        this.isWrapped = false;
         this.endsOnFormatted = function () {
             return !this.endsOn ? '' : parseToMoment(this.endsOn).format(defaultDateFormat);
         };
@@ -77,6 +78,9 @@
             }
             this.confirmedMembers.push(_.find(this.pendingMembers, { email: member.email }));
         };
+        this.wrap = function () {
+            this.isWrapped = true;
+        };
         this.meta = function () {
             return {
                 initiator: this.initiator.email,
@@ -85,6 +89,7 @@
                 title: this.title,
                 startsOn: this.startsOn,
                 endsOn: this.endsOn,
+                isWrapped: this.isWrapped,
                 placeName: this.place.name,
                 placeAddress: this.place.address,
                 placeLocationLat: this.place.location.lat,
