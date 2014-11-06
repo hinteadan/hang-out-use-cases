@@ -35,6 +35,7 @@
     function Activity(initiator, title, startsOn, endsOn, place, description) {
         this.initiator = initiator;
         this.pendingMembers = [];
+        this.confirmedMembers = [];
         this.title = title || null;
         this.description = description || null;
         this.startsOn = startsOn || new Date().getTime();
@@ -49,13 +50,38 @@
         this.allParticipants = function () {
             return _.union([this.initiator], this.pendingMembers);
         };
+        this.unconfirmedParticipants = function () {
+            return _.difference(this.pendingMembers, this.confirmedMembers);
+        };
         this.hasParticipant = function (individual) {
             return _.any(this.allParticipants(), function (p) { return p.email === individual.email; });
+        };
+        this.isParticipantConfirmed = function (member) {
+            if (member.email === this.initiator.email) {
+                return true;
+            }
+            return _.any(this.confirmedMembers, function (p) { return p.email === member.email; });
+        };
+        this.joinMember = function (member) {
+            if (this.hasParticipant(member)) {
+                return;
+            }
+            this.pendingMembers.push(member);
+        };
+        this.confirmMember = function (member) {
+            if (!this.hasParticipant(member)) {
+                throw new Error('This member is not willing to join this activity');
+            }
+            if (this.isParticipantConfirmed(member)) {
+                return;
+            }
+            this.confirmedMembers.push(_.find(this.pendingMembers, { email: member.email }));
         };
         this.meta = function () {
             return {
                 initiator: this.initiator.email,
                 participants: _.pluck(this.pendingMembers, 'email').join(','),
+                confirmedParticipants: _.pluck(this.confirmedMembers, 'email').join(','),
                 title: this.title,
                 startsOn: this.startsOn,
                 endsOn: this.endsOn,

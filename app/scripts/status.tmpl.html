@@ -64,7 +64,8 @@
                             <li ng-repeat="dude in entry.activity.pendingMembers | orderBy:['name','email'] track by dude.email">
                                 {{dude.name || dude.email}}
                                 &nbsp;|&nbsp;
-                                <a class="clickable"><small>Accept</small></a>
+                                <a class="clickable" ng-hide="entry.activity.isParticipantConfirmed(dude)" ng-click="confirmParticipant(entry, dude)"><small>Accept</small></a>
+                                <em ng-show="entry.activity.isParticipantConfirmed(dude)">Confirmed</em>
                             </li>
                         </ul>
                     </td>

@@ -59,8 +59,7 @@
                 return;
             }
 
-            activity.pendingMembers = activity.pendingMembers || [];
-            activity.pendingMembers.push(individual);
+            activity.joinMember(individual);
 
             var entity = new ds.Entity(activity, activity.meta());
             entity.Id = id;
@@ -68,9 +67,6 @@
 
             activityStore.Save(entity, function (result) {
                 ///<param name="result" type="ds.OperationResult" />
-                if (!result.isSuccess) {
-                    activity.pendingMembers.pop();
-                }
                 if (angular.isFunction(then)) {
                     then.call(result, result.data, result.isSuccess, result.reason);
                 }
@@ -116,11 +112,35 @@
             });
         }
 
+        function confirmParticipantForActivity(id, token, activity, participant, then) {
+
+            if (activity.isParticipantConfirmed(participant)) {
+                if (angular.isFunction(then)) {
+                    then.call(new ds.OperationResult(false, 'This participant is already confirmed'));
+                }
+                return;
+            }
+
+            activity.confirmMember(participant);
+
+            var entity = new ds.Entity(activity, activity.meta());
+            entity.Id = id;
+            entity.CheckTag = token;
+
+            activityStore.Save(entity, function (result) {
+                ///<param name="result" type="ds.OperationResult" />
+                if (angular.isFunction(then)) {
+                    then.call(result, result.data, result.isSuccess, result.reason);
+                }
+            });
+        }
+
         this.publishNewActivity = as$q(storeActivity);
         this.activitiesToJoin = as$q(fetchJoinableActivities);
         this.joinActivity = as$q(joinActivity);
         this.activitiesFor = as$q(fetchActivitiesFor);
         this.activitiesAppliedToFor = as$q(fetchActivitiesForParticipant);
+        this.confirmParticipant = as$q(confirmParticipantForActivity);
 
     }]);
 

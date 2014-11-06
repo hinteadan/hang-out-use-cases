@@ -37,6 +37,11 @@
                         dto[index] = constructFromDto(dude, new ConstructorInfo(m.Individual));
                     });
                 }, null, true),
+                confirmedMembers: new ConstructorInfo(function (dto) {
+                    return _.map(dto, function (dude, index) {
+                        dto[index] = constructFromDto(dude, new ConstructorInfo(m.Individual));
+                    });
+                }, null, true),
                 startsOn: new ConstructorInfo(function (dto) { return new Date(dto).getTime(); }, null, true),
                 endsOn: new ConstructorInfo(function (dto) { return dto ? new Date(dto).getTime() : null; }, null, true),
                 place: new ConstructorInfo(m.Place, {

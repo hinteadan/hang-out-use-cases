@@ -1,6 +1,8 @@
 ﻿(function (angular) {
     'use strict';
 
+    var notify = this.alert;
+
     angular.module('hang-out')
     .controller('status', ['$scope', '$q', 'model', 'dataStore', function ($s, $q, m, store) {
 
@@ -20,12 +22,20 @@
             $s.flag.isLoadingMyActivities = true;
             $s.flag.isLoadingMyAppliedForActivities = true;
             $q.all([store.activitiesFor(me), store.activitiesAppliedToFor(me)])
-            .then(function(activitiesPool){
+            .then(function (activitiesPool) {
                 $s.myActivities = activitiesPool[0];
                 $s.flag.isLoadingMyActivities = false;
                 $s.myAppliedActivities = activitiesPool[1];
                 $s.flag.isLoadingMyAppliedForActivities = false;
                 $s.flag.hasQueried = true;
+            });
+        };
+
+        $s.confirmParticipant = function (activityEntry, participant) {
+            store
+            .confirmParticipant(activityEntry.id, activityEntry.token, activityEntry.activity, participant)
+            .then(null, function (reason) {
+                notify('Cannot confirm because: ' + reason);
             });
         };
 
