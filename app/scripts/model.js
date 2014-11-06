@@ -114,7 +114,7 @@
                 reason: reason
             });
             if (this.isParticipantConfirmed(member) && this.isWrapped) {
-                this.unWrap(member.email + ' which was a confirmed participant, bailed out, quoting: "' + reason + '"');
+                this.unWrap(member.email + ' who was a confirmed participant, bailed out, quoting: "' + reason + '"');
             }
             _.remove(this.pendingMembers, function (m) { return m.email === member.email; });
             _.remove(this.confirmedMembers, function (m) { return m.email === member.email; });
