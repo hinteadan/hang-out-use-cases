@@ -17,7 +17,7 @@
             </legend>
         </fieldset>
         <div class="form-group">
-            <input type="email" class="form-control" ng-model="me.email" placeholder="Email address" />
+            <input type="email" class="form-control" ng-model="me.email" ng-change="flag.hasQueried = false" placeholder="Email address" />
         </div>
         <div class="form-group" ng-hide="isMeSimpleView">
             <input type="text" class="form-control" ng-model="me.name" placeholder="Full name" />
@@ -31,4 +31,15 @@
             </button>
         </div>
     </form>
+
+    <div ng-show="flag.hasQueried">
+        <div class="text-center" ng-show="flag.isLoadingMyActivities">Loading activities initiated by me, please wait...</div>
+        <div class="text-center" ng-show="!flag.isLoadingMyActivities && !myActivities.length">I haven't initiated any activities. Perhaps <a href="#/new">create one</a> ?</div>
+
+
+
+        <div class="text-center" ng-show="flag.isLoadingMyAppliedForActivities">Loading activities to which I applied, please wait...</div>
+        <div class="text-center" ng-show="!flag.isLoadingMyAppliedForActivities && !myAppliedActivities.length">I haven't applied for any activity. Perhaps <a href="#/join">join one now</a> ?</div>
+    </div>
+
 </div>
