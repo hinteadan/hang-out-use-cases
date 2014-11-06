@@ -34,7 +34,7 @@
         $s.confirmParticipant = function (activityEntry, participant) {
             store
             .confirmParticipant(activityEntry.id, activityEntry.token, activityEntry.activity, participant)
-            .then(null, function (reason) {
+            .then($s.statusForMe, function (reason) {
                 notify('Cannot confirm because: ' + reason);
             });
         };
@@ -42,7 +42,7 @@
         $s.wrapIt = function (activityEntry) {
             store
             .wrapActivity(activityEntry.id, activityEntry.token, activityEntry.activity)
-            .then(null, function (reason) {
+            .then($s.statusForMe, function (reason) {
                 notify('Cannot wrap activity because: ' + reason);
             });
         };
@@ -50,7 +50,15 @@
         $s.cancel = function (activityEntry, cancellationReason) {
             store
             .cancelActivity(activityEntry.id, activityEntry.token, activityEntry.activity, cancellationReason)
-            .then(null, function (reason) {
+            .then($s.statusForMe, function (reason) {
+                notify('Cannot cancel activity because: ' + reason);
+            });
+        };
+
+        $s.bailOut = function (activityEntry, bailOutReason) {
+            store
+            .bailOut(activityEntry.id, activityEntry.token, activityEntry.activity, me, bailOutReason)
+            .then($s.statusForMe, function (reason) {
                 notify('Cannot cancel activity because: ' + reason);
             });
         };

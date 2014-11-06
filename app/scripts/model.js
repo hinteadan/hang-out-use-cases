@@ -46,6 +46,8 @@
         this.isWrapped = false;
         this.isCancelled = false;
         this.cancellationReason = null;
+        this.bailAudit = [];
+        this.unWrapAudit = [];
         this.endsOnFormatted = function () {
             return !this.endsOn ? '' : parseToMoment(this.endsOn).format(defaultDateFormat);
         };
@@ -66,7 +68,7 @@
             return _.any(this.confirmedMembers, function (p) { return p.email === member.email; });
         };
         this.joinMember = function (member) {
-            if (this.hasParticipant(member)) {
+            if (this.hasParticipant(member) || this.isWrapped) {
                 return;
             }
             this.pendingMembers.push(member);
@@ -83,9 +85,34 @@
         this.wrap = function () {
             this.isWrapped = true;
         };
+        this.unWrap = function (reason) {
+            if (!reason) {
+                throw new Error('A reason for unwrapping an activity must be provided');
+            }
+            this.unWrapAudit.push({
+                at: new Date().getTime(),
+                reason: reason
+            });
+            this.isWrapped = false;
+        };
         this.cancel = function (reason) {
             this.isCancelled = true;
             this.cancellationReason = reason;
+        };
+        this.bailOut = function (member, reason) {
+            if (!this.hasParticipant(member)) {
+                return;
+            }
+            this.bailAudit.push({
+                at: new Date().getTime(),
+                email: member.email,
+                reason: reason
+            });
+            if (this.isParticipantConfirmed(member) && this.isWrapped) {
+                this.unWrap(member.email + ' which was a confirmed participant, bailed out, quoting: "' + reason + '"');
+            }
+            _.remove(this.pendingMembers, function (m) { return m.email === member.email; });
+            _.remove(this.confirmedMembers, function (m) { return m.email === member.email; });
         };
         this.meta = function () {
             return {

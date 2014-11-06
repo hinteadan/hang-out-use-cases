@@ -158,6 +158,11 @@
             persistUpdatedActivity(id, token, activity, then);
         }
 
+        function bailOutParticipantFromActivity(id, token, activity, member, reason, then) {
+            activity.bailOut(member, reason);
+            persistUpdatedActivity(id, token, activity, then);
+        }
+
         this.publishNewActivity = as$q(storeActivity);
         this.activitiesToJoin = as$q(fetchJoinableActivities);
         this.joinActivity = as$q(joinActivity);
@@ -166,6 +171,7 @@
         this.confirmParticipant = as$q(confirmParticipantForActivity);
         this.wrapActivity = as$q(wrapActivity);
         this.cancelActivity = as$q(cancelActivity);
+        this.bailOut = as$q(bailOutParticipantFromActivity);
 
     }]);
 

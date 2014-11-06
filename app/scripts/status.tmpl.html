@@ -133,11 +133,27 @@
                             <li ng-repeat="dude in entry.activity.allParticipants() | orderBy:['name','email'] track by dude.email">
                                 {{dude.name || dude.email}}
                                 <em class="small" ng-show="dude == entry.activity.initiator"><strong>Initiator</strong></em>
+                                <em class="small" ng-show="dude.email == me.email"><strong>me</strong></em>
                             </li>
                         </ul>
                     </td>
                     <td>
-                        Actions go here
+                        <a class="clickable" ng-hide="isBailingOut" ng-init="isBailingOut = false" ng-click="isBailingOut = true">Bail out!</a>
+                        <div ng-show="isBailingOut" ng-init="reason = null">
+                            <form role="form" ng-submit="bailOut(entry, reason); isBailingOut = false;">
+                                <div class="form-group form-group-sm">
+                                    <input type="text" class="form-control input-sm" ng-model="reason" placeholder="Bail reason" />
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right" ng-disabled="!reason">
+                                        Ok, bail out!
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-link btn-warning pull-right" ng-click="isBailingOut = false">
+                                        Oh, never mind
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </tbody>
