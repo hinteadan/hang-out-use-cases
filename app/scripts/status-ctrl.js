@@ -1,7 +1,8 @@
 ﻿(function (angular) {
     'use strict';
 
-    var notify = this.alert;
+    var notify = this.alert,
+        confirm = this.confirm;
 
     angular.module('hang-out')
     .controller('status', ['$scope', '$q', 'model', 'dataStore', function ($s, $q, m, store) {
@@ -44,6 +45,14 @@
             .wrapActivity(activityEntry.id, activityEntry.token, activityEntry.activity)
             .then(null, function (reason) {
                 notify('Cannot wrap activity because: ' + reason);
+            });
+        };
+
+        $s.cancel = function (activityEntry, cancellationReason) {
+            store
+            .cancelActivity(activityEntry.id, activityEntry.token, activityEntry.activity, cancellationReason)
+            .then(null, function (reason) {
+                notify('Cannot cancel activity because: ' + reason);
             });
         };
 

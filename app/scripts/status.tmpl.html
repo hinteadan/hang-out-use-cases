@@ -70,15 +70,33 @@
                         </ul>
                     </td>
                     <td>
-                        <div ng-show="entry.activity.isWrapped">
-                            <em><strong>It's a Wrap !</strong></em>
-                            &nbsp;|&nbsp;
-                            <a class="clickable">Cancel</a>
+                        <em ng-show="entry.activity.isCancelled"><strong>Canceled</strong> because: <small>{{entry.activity.cancellationReason}}</small></em>
+                        <div ng-hide="entry.activity.isCancelled || isCancelling" ng-init="isCancelling = false">
+                            <div ng-show="entry.activity.isWrapped">
+                                <em><strong>It's a Wrap !</strong></em>
+                                &nbsp;|&nbsp;
+                                <a class="clickable" ng-click="isCancelling = true">Cancel</a>
+                            </div>
+                            <div ng-hide="entry.activity.isWrapped">
+                                <a class="clickable" ng-click="wrapIt(entry)">Wrap it!</a>
+                                &nbsp;|&nbsp;
+                                <a class="clickable" ng-click="isCancelling = true">Cancel</a>
+                            </div>
                         </div>
-                        <div ng-hide="entry.activity.isWrapped">
-                            <a class="clickable" ng-click="wrapIt(entry)">Wrap it!</a>
-                            &nbsp;|&nbsp;
-                            <a class="clickable">Cancel</a>
+                        <div ng-show="isCancelling" ng-init="reason = null">
+                            <form role="form" ng-submit="cancel(entry, reason); isCancelling = false;">
+                                <div class="form-group form-group-sm">
+                                    <input type="text" class="form-control input-sm" ng-model="reason" placeholder="Cancellation reason" />
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right" ng-disabled="!reason">
+                                        Ok, cancel!
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-link btn-warning pull-right" ng-click="isCancelling = false">
+                                        Oh, never mind
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </td>
                 </tr>

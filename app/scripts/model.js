@@ -44,6 +44,8 @@
         };
         this.endsOn = endsOn;
         this.isWrapped = false;
+        this.isCancelled = false;
+        this.cancellationReason = null;
         this.endsOnFormatted = function () {
             return !this.endsOn ? '' : parseToMoment(this.endsOn).format(defaultDateFormat);
         };
@@ -81,6 +83,10 @@
         this.wrap = function () {
             this.isWrapped = true;
         };
+        this.cancel = function (reason) {
+            this.isCancelled = true;
+            this.cancellationReason = reason;
+        };
         this.meta = function () {
             return {
                 initiator: this.initiator.email,
@@ -90,6 +96,7 @@
                 startsOn: this.startsOn,
                 endsOn: this.endsOn,
                 isWrapped: this.isWrapped,
+                isCancelled: this.isCancelled,
                 placeName: this.place.name,
                 placeAddress: this.place.address,
                 placeLocationLat: this.place.location.lat,

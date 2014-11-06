@@ -129,6 +129,7 @@
 
             persistUpdatedActivity(id, token, activity, then);
         }
+
         function wrapActivity(id, token, activity, then) {
 
             if (activity.isWrapped) {
@@ -143,6 +144,20 @@
             persistUpdatedActivity(id, token, activity, then);
         }
 
+        function cancelActivity(id, token, activity, reason, then) {
+
+            if (activity.isCancelled) {
+                if (angular.isFunction(then)) {
+                    then.call(new ds.OperationResult(false, 'This activity is already cancelled'));
+                }
+                return;
+            }
+
+            activity.cancel(reason);
+
+            persistUpdatedActivity(id, token, activity, then);
+        }
+
         this.publishNewActivity = as$q(storeActivity);
         this.activitiesToJoin = as$q(fetchJoinableActivities);
         this.joinActivity = as$q(joinActivity);
@@ -150,6 +165,7 @@
         this.activitiesAppliedToFor = as$q(fetchActivitiesForParticipant);
         this.confirmParticipant = as$q(confirmParticipantForActivity);
         this.wrapActivity = as$q(wrapActivity);
+        this.cancelActivity = as$q(cancelActivity);
 
     }]);
 
