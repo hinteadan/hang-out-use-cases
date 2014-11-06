@@ -46,7 +46,10 @@
         }
 
         function fetchJoinableActivities(then) {
-            var query = new ds.queryWithAnd().where('startsOn')(ds.is.HigherThan)(new Date().getTime());
+            var query = new ds.queryWithAnd()
+                .where('startsOn')(ds.is.HigherThan)(new Date().getTime())
+                .where('isCancelled')(ds.is.EqualTo)(false)
+                .where('isWrapped')(ds.is.EqualTo)(false);
             activityStore.Query(query, function (result) {
                 ///<param name="result" type="ds.OperationResult" />
                 if (angular.isFunction(then)) {
