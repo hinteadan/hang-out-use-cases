@@ -5,3 +5,4 @@ dist
 app/bower_components
 
 *.suo
+hang-out-core
