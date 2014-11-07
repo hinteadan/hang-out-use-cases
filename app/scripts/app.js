@@ -1,12 +1,7 @@
 ﻿(function (angular) {
     'use strict';
 
-    angular.module('hang-out', ['ngRoute', 'ui.bootstrap.datetimepicker'])
-    //.constant('storeUrl', 'http://localhost/HttpDataStore/')
-    .constant('storeUrl', 'http://h-httpstore.azurewebsites.net/')
-    .constant('storeName', {
-        activities: 'h-hang-out-activities'
-    })
+    angular.module('hang-out-use-case-app', ['hang-out', 'ngRoute', 'ui.bootstrap.datetimepicker'])
     .config(['$routeProvider', function ($route) {
         $route
             .when('/', { templateUrl: 'scripts/use-cases.tmpl.html', controller: 'use-cases' })

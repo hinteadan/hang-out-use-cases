@@ -3,7 +3,7 @@
 
     var notify = this.alert;
 
-    angular.module('hang-out')
+    angular.module('hang-out-use-case-app')
     .controller('join-activity', ['$scope', '$location', 'dataStore', 'model', function ($s, $l, store, m) {
 
         var me = new m.Individual();

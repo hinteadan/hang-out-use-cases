@@ -3,7 +3,7 @@
 
     var notify = this.alert;
 
-    angular.module('hang-out')
+    angular.module('hang-out-use-case-app')
     .controller('status', ['$scope', '$q', 'model', 'dataStore', function ($s, $q, m, store) {
 
         var me = new m.Individual(null, 'hintea_dan@yahoo.co.uk');

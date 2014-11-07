@@ -3,7 +3,7 @@
 
     var notify = this.alert;
 
-    angular.module('hang-out')
+    angular.module('hang-out-use-case-app')
     .controller('new-activity', ['$scope', '$location', 'model', 'dataStore', function ($s, $l, m, store) {
 
         function stampTime(value) {
