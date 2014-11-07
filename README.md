@@ -51,3 +51,7 @@ Flow Hang-Out Mobile App
  1. Current status (still going to happen, or is cancelled)
  2. Bail out, specifying a reason for doing so;
  3. If a dude bails out of a wrapped activity, the activity is automatically un-wrapped, forcing the initiator to take action in order to wrap it back;
+ 
+ **ACTIVITIES AND PLACES**
+ 
+ <https://docs.google.com/spreadsheet/ccc?key=0AqcA6f1Xlu4EdDlSWWxZb19zZ25UdUhkTlNpakd6SWc&usp=sharing>
